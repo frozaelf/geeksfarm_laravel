@@ -10,14 +10,13 @@
 		});
 	}); 
 </script>
-
 <div id="captions">
 
 	@foreach ($articles as $article)
 
-	<div class="item-masonry col-md-3" data-src="{{ asset('images/'.$article->image) }}" data-sub-html="<h4>{{$article->title}}</h4><p>{{$article->content}}</p>">
+	<div class="item-masonry col-md-3" data-src="{{ asset('storage/'.$article->image) }}" data-sub-html="<h4>{{$article->title}}</h4><p>{{$article->content}}</p>">
 		<div class="thumbnail">
-			<a  href=""> <img src="{{ asset('images/'.$article->image) }}" class="img-responsive"/> </a>
+			<a  href=""> <img src="{{ asset('storage/'.$article->image) }}" class="img-responsive"/> </a>
 		</div>
 	</div>
 

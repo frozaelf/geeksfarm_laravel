@@ -194,10 +194,11 @@ class ArticlesController extends Controller
       $article->content = $request->input('content');
       $article->author = $request->input('author');
      if($request->hasFile('image')) {
+			createdirYmd('storage');
             $file = Input::file('image');            
-            $name = str_random(20). '-' .$file->getClientOriginalName();            
-            $article->image = $name;
-            $file->move(public_path().'/images/', $name);
+            $name = str_random(20). '-' .$file->getClientOriginalName();  
+            $article->image = date("Y")."/".date("m")."/".date("d")."/".$name;			
+            $file->move(public_path().'/storage/'.date("Y")."/".date("m")."/".date("d")."/", $name);
         }
       $article->save();
 
@@ -263,13 +264,14 @@ class ArticlesController extends Controller
       // if user choose a file, replace the old one //
       if( $request->hasFile('image') ){
 		    if($article->image != ""){	
-		    $image_path = public_path().'/images/'.$article->image;
+		    $image_path = public_path().'/storage/'.$article->image;
 		    unlink($image_path);
 			}
+			createdirYmd('storage');
             $file = Input::file('image');            
             $name = str_random(20). '-' .$file->getClientOriginalName();            
-            $article->image = $name;			
-            $file->move(public_path().'/images/', $name);
+            $article->image = date("Y")."/".date("m")."/".date("d")."/".$name;			
+            $file->move(public_path().'/storage/'.date("Y")."/".date("m")."/".date("d")."/", $name);
 			
       }else{
       			
@@ -298,7 +300,7 @@ class ArticlesController extends Controller
         //
        $article = Article::find($id);
 	   	if($article->image){
-		    $image_path = public_path().'/images/'.$article->image;
+		    $image_path = public_path().'/storage/'.$article->image;
 		    unlink($image_path);
 		}
     if ($article->delete()) {
@@ -343,7 +345,7 @@ class ArticlesController extends Controller
             })
             ->editColumn('image', function ($article) {
 				if ($article->image != ""){
-				return "<img src='".asset('images/'.$article->image)."' class='img-responsive' width='100px'>";  
+				return "<img src='".asset('storage/'.$article->image)."' class='img-responsive' width='100px'>";  
 				}
             })
             ->removeColumn('password')

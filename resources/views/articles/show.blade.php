@@ -6,7 +6,7 @@
 	<div class="panel-body">
 		<center>
 			@if($article->image != "")
-			<img class="img-responsive thumb img-thumbnail m-b" src="{{ asset('images/'.$article->image) }}" alt="Saber9">
+			<img class="img-responsive thumb img-thumbnail m-b" src="{{ asset('storage/'.$article->image) }}" alt="Saber9">
 			@endif
 		</center>
 		<article>

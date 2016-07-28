@@ -12,7 +12,7 @@
 		<div class="form-group">
 			<div class="col-lg-3"></div>
 			<div class="col-lg-9">
-				{!! Html::image(URL::asset('images/'.$article->image), '',['class' => 'img-responsive','style' => 'max-width:100px']) !!}
+				{!! Html::image(URL::asset('storage/'.$article->image), '',['class' => 'img-responsive','style' => 'max-width:100px']) !!}
 			</div>
 			@endif
 		</div>
