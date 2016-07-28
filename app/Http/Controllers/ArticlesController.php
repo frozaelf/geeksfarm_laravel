@@ -14,8 +14,8 @@ use App\Http\Requests\ArticlesRequest;
 use App\Comment;
 use Auth;
 use Illuminate\Support\Collection;
-
 use Datatables;
+
 class ArticlesController extends Controller
 {
     /**
@@ -84,17 +84,11 @@ class ArticlesController extends Controller
 
   }
    public function searching(Request $request)
-
   {
       $articles = Article::paginate(2);
-
     if($request->ajax()) {
-
-
       if($request->input('keywords')) {
-
       $articles = Article::where('title', 'like', '%'.$request->input('keywords').'%')
-
           ->orWhere('content', 'like', '%'.$request->input('keywords').'%')
 
           ->paginate(2);
