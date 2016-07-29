@@ -17,12 +17,10 @@
   class CommentsController extends Controller {
   	
     public function __construct() {
-
       $this->middleware('reader', ['only' => 'create', 'store']);
-
     }
     public function store(Request $request)
-
+edit 1
     {
 
       $validate = Validator::make($request->all(), Comment::valid());
