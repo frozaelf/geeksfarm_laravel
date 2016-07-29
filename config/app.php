@@ -155,6 +155,10 @@ return [
 		Yajra\Datatables\DatatablesServiceProvider::class,
 		
     	Cviebrock\EloquentSluggable\ServiceProvider::class,
+    	
+		Maatwebsite\Excel\ExcelServiceProvider::class,
+		
+		Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,6 +216,11 @@ return [
      	'Html' => Collective\Html\HtmlFacade::class,
      	
 		'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+		
+		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+		
+		'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
+

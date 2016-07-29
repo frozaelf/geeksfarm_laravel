@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
@@ -12,10 +11,12 @@ use App\Http\Controllers\Controller;
 use App\Article;
 use App\Http\Requests\ArticlesRequest;
 use App\Comment;
+use PDF;
 use Auth;
 use Illuminate\Support\Collection;
 use Datatables;
-
+use App\User;
+use Maatwebsite\Excel\Facades\Excel;
 class ArticlesController extends Controller
 {
     /**
@@ -293,10 +294,10 @@ class ArticlesController extends Controller
     {
         //
        $article = Article::find($id);
-	   	if($article->image){
-		    $image_path = public_path().'/storage/'.$article->image;
-		    unlink($image_path);
-		}
+	   	// if($article->image){
+		    // $image_path = public_path().'/storage/'.$article->image;
+		    // unlink($image_path);
+		// }
     if ($article->delete()) {
 
       Session::flash('notice', 'Article success delete');
@@ -332,7 +333,7 @@ class ArticlesController extends Controller
 
         return Datatables::of($articles)
             ->addColumn('action', function ($article) {
-                return link_to('articles/'.$article->slug, 'Show', array('class' => 'btn btn-info btn-sm btn-raised')).link_to('articles/'.$article->id.'/edit', 'Edit', array('class' => 'btn btn-warning btn-sm btn-raised')).'<a href="'.route('articles.destroy', $article->id).'" data-method="delete" data-token="'.csrf_token().'"  onclick="return confirm('."'Are you sure?'".')" class="btn-sm btn btn-danger btn-raised">Delete</a>';
+                return link_to('articles/'.$article->slug, 'Show', array('class' => 'btn btn-info btn-sm btn-raised')).link_to('articles/'.$article->id.'/edit', 'Edit', array('class' => 'btn btn-warning btn-sm btn-raised')).'<a href="'.'articles/delete/'.$article->id.'" data-method="delete" data-token="'.csrf_token().'"  onclick="return confirm('."'Are you sure?'".')" class="btn-sm btn btn-danger btn-raised">Delete</a>'.link_to('articles/getExportExcel/'.$article->slug, 'E Excel', array('class' => 'btn btn-primary btn-sm btn-raised')).link_to('articles/getExportPdf/'.$article->slug, 'E PDF', array('class' => 'btn btn-primary btn-sm btn-raised'));
             })
             ->editColumn('id', function ($article) {
                 return "<input type='checkbox' name='id[]' value='".$article->id."'>";
@@ -344,5 +345,78 @@ class ArticlesController extends Controller
             })
             ->removeColumn('password')
             ->make(true);
+	}
+
+	public function getExportExcel($id='')
+	{
+		$article = Article::where('slug', '=', $id);
+		$namefile = "Excel-Article-".$article->first()->slug;
+		$comment = Comment::where('article_id', '=', $article->first()->id);
+		$articleselect = $article;					
+		$commentselect = $comment;
+		Excel::create($namefile, function($excel) use($articleselect, $commentselect) {
+		    $excel->sheet('Sheet 1', function($sheet) use($articleselect) {
+		        $sheet->fromArray($articleselect->get());
+		    });
+		      $excel->sheet('Sheet 1', function($sheet) use($commentselect) {
+		        $sheet->fromArray($commentselect->get());
+		    });
+		})->export('xls');
+	}
+	
+	public function getImportExcel()
+	{
+			if(Input::hasFile('import_file')){
+
+			$path = Input::file('import_file')->getRealPath();
+
+			$data_from_excel = Excel::load($path, function($reader) {
+
+			})->get();
+			echo $data_from_excel.'<br><br>';
+			if(!empty($data_from_excel) && $data_from_excel->count()){
+
+			      $article = new Article;
+			      $article->title = $data_from_excel[0][0]->title;
+			      $article->content = $data_from_excel[0][0]->content;
+			      $article->author = $data_from_excel[0][0]->author;
+			      $article->created_at = $data_from_excel[0][0]->created_at;
+			      $article->updated_at = $data_from_excel[0][0]->updated_at;
+			      $article->save();
+				$article_id = Article::where('slug', 'like', '%'.$data_from_excel[0][0]->slug.'%')->orderBy('id', 'desc')->first()->id;
+				echo $article_id.'<br><br><br>';
+				echo $data_from_excel[0][0].'<br><br>';
+				echo $data_from_excel[1].'<br><br>';
+				
+				foreach ($data_from_excel[1] as $data) {					
+			      $comment = new Comment;
+			      $comment->article_id = $article_id;
+			      $comment->user_id = $data->user_id;
+			      $comment->content = $data->content;
+			      $comment->created_at = $data->created_at;
+			      $comment->updated_at = $data->updated_at;
+			      $comment->save();
+				}
+
+			}
+
+		}
+
+		return back();
+	}
+	
+	public function getExportPdf($id)
+	{
+		$filename = "Pdf-Article-".$id;
+	    $article = Article::with('comments.user')->where('slug', '=', $id)->first();
+	    $comment = $article->comments;
+		$data['comments'] = $comment;		
+		$data['articles'] = $article;
+		// view()->share('articles',$article);
+		// view()->share('comments',$comment);
+            $pdf = PDF::loadView('articles.ExportPdf', $data);
+
+            return $pdf->download($filename);
+
 	}
 }

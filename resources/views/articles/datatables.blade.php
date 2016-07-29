@@ -23,6 +23,22 @@
 		</table>
 	</div>
 </div>
+		{!! Form::open(['url' => 'articles/getImportExcel', 'files'=>true, 'class' => 'form-horizontal']) !!}
+		<div class="form-group">
+			{!! Form::label('image', 'Choose an image', array('class' => 'col-lg-3 control-label')) !!}
+			<div class="col-lg-9">
+				{!! Form::file('import_file', array('class' => 'form-control')) !!}
+				<input readonly="" class="form-control" placeholder="Browse...." type="text">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-9">
+				{!! Form::submit('Save', array('class' => 'btn btn-inverse btn-raised')) !!}
+			</div>
+			<div class="clear"></div>
+		</div>
+		{!! Form::close() !!}
 <script>
 	$(function() {
 		$('#article-table').DataTable({

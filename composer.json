@@ -11,7 +11,9 @@
         "guzzlehttp/guzzle": "~4.0",
         "yajra/laravel-datatables-oracle": "^6.16",
         "cviebrock/eloquent-sluggable": "^4.0",
-    	"doctrine/dbal": "~2.3"
+    	"doctrine/dbal": "~2.3",
+    	"maatwebsite/excel": "~2.0.0",
+    	"barryvdh/laravel-dompdf": "0.6.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -11,6 +11,7 @@ class Comment extends Model
       'article_id','content', 'user_id',
 
     ];
+	protected $hidden = array('id');
     //
     public static function valid() {
 

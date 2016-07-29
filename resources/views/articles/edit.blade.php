@@ -14,8 +14,8 @@
 			<div class="col-lg-9">
 				{!! Html::image(URL::asset('storage/'.$article->image), '',['class' => 'img-responsive','style' => 'max-width:100px']) !!}
 			</div>
-			@endif
 		</div>
+			@endif
 		<div class="form-group">
 			{!! Form::label('image', 'Choose an image', array('class' => 'col-lg-3 control-label')) !!}
 			<div class="col-lg-9">

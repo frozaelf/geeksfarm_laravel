@@ -15,7 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/articles_page', 'ArticlesController@page');
-Route::get('/articles/ajax', 'ArticlesController@ajax');
+Route::get('/articles/getExportPdf/{articles}', 'ArticlesController@getExportPdf');
+Route::post('/articles/getImportExcel', 'ArticlesController@getImportExcel');
+Route::get('/articles/getExportExcel/{articles}', 'ArticlesController@getExportExcel');
+Route::post('/articles/post', 'ArticlesController@post');
 Route::get('/articles/pagination', 'ArticlesController@pagination');
 Route::get('/articles/searching', 'ArticlesController@searching');
 Route::get('/articles/sorting', 'ArticlesController@sorting');

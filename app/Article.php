@@ -12,7 +12,7 @@ class Article extends Model
       'title', 'content', 'author', 'images',
 
     ];
-	
+	protected $hidden = array('id');
     use Sluggable;
 
     /**
