@@ -21,10 +21,6 @@
     }
     public function store(Request $request)
 
-edit 1
-
-asdasd
-
     {
 
       $validate = Validator::make($request->all(), Comment::valid());
