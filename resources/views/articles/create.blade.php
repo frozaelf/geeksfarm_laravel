@@ -25,7 +25,7 @@
 		<div class="form-group">
 			{!! Form::label('content', 'Content', array('class' => 'col-lg-3 control-label')) !!}
 			<div class="col-lg-9">
-				{!! Form::textarea('content', null, array('class' => 'form-control', 'rows' => 10)) !!}
+				{!! Form::textarea('content', null, array('class' => 'ckeditor', 'rows' => 10)) !!}
 				{!! $errors->first('content') !!}
 			</div>
 			<div class="clear"></div>

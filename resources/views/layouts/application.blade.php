@@ -31,8 +31,6 @@
 	<script src="{{ URL::asset('javascripts/bootstrap-material-design/js/material.min.js') }}"></script>
 	<script src="{{ URL::asset('javascripts/bootstrap-material-design/js/ripples.min.js') }}"></script>
 	<script src="{{ URL::asset('javascripts/colorbox/colorbox.js') }}"></script>
-	<script src="{{ URL::asset('javascripts/ckeditor/init.js') }}"></script>
-	<script src="{{ URL::asset('javascripts/ckeditor/ckeditor.js') }}"></script>
 	<script src="{{ URL::asset('javascripts/bootstrap-notify.js') }}"></script>
 	<script src="{{ URL::asset('javascripts/Chart.bundle.js') }}"></script>
 	<script src="{{ URL::asset('javascripts/chartkick.js') }}"></script>
@@ -47,7 +45,8 @@
 	<script src="{{ URL::asset('javascripts/lightGallery/js/lg-pager.js') }}"></script>
 	<script src="{{ URL::asset('javascripts/masonry/masonry.js') }}"></script>
 	<script src="{{ URL::asset('javascripts/custom.js') }}"></script>
-
+      <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
     </head>
 
     <body style="padding-top:75px;">
@@ -66,6 +65,16 @@
 
       </div>
 
+    <script>
+        $('.ckeditor').ckeditor({
+        	
+    filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+    filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+    filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+    filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+        });
+        // $('.textarea').ckeditor(); // if class is prefered.
+    </script>
 
     </body>
 

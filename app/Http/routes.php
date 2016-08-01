@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/articles_page', 'ArticlesController@page');
+Route::get('/articles/testcode', 'PagesController@testcode');
 Route::get('/articles/getExportPdf/{articles}', 'ArticlesController@getExportPdf');
 Route::post('/articles/getImportExcel', 'ArticlesController@getImportExcel');
 Route::get('/articles/getExportExcel/{articles}', 'ArticlesController@getExportExcel');

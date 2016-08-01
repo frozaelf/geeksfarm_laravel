@@ -159,6 +159,11 @@ return [
 		Maatwebsite\Excel\ExcelServiceProvider::class,
 		
 		Barryvdh\DomPDF\ServiceProvider::class,
+		
+		Unisharp\Ckeditor\ServiceProvider::class,
+		
+		Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
+    	Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -220,6 +225,8 @@ return [
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 		
 		'PDF' => Barryvdh\DomPDF\Facade::class,
+		
+		'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

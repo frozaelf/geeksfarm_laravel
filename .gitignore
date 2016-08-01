@@ -3,5 +3,6 @@
 /public/storage
 Homestead.yaml
 Homestead.json
+.env
 /public/ckeditor_assets/*
 /public/uploads/*
